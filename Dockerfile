@@ -1,4 +1,31 @@
 FROM node:latest
-LABEL version: 1.0.0
-RUN apt -y update && apt -y upgrade && apt -y install ffmpeg git imagemagick graphicsmagick sudo yarn curl && cd /etc/apt/sources.list.d && sudo apt remove nodejs && sudo apt remove nodejs-doc && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - &&apt-get install -y nodejs && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && apt -y update && apt -y install yarn && apt autoremove -y && rm -rf /var/lib/apt/lists/*
+LABEL version="1.0.0"
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    ffmpeg \
+    git \
+    imagemagick \
+    graphicsmagick \
+    sudo \
+    curl \
+    yarn \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libnss3 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libpango1.0-0 \
+    fonts-noto-color-emoji \
+    --no-install-recommends && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 CMD ["bash"]
